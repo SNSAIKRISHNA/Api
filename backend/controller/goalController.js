@@ -1,4 +1,5 @@
 import asyncHandler from "express-async-handler";
+
 import Goal from "../models/goalModel.js";
 
 export const getGoal = asyncHandler(async (req, res) => {
@@ -25,8 +26,10 @@ export const updateGoal = asyncHandler(async (req, res) => {
   if (!goal) {
     res.status(400).json({ message: "Goal is Not found" });
   }
-  const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body,{new: true,})
-  res.status(200).json({updatedGoal}); // routes /api/goal/:id
+  const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+  res.status(200).json({ updatedGoal }); // routes /api/goal/:id
 });
 
 export const deleteGoal = asyncHandler(async (req, res) => {
@@ -36,7 +39,6 @@ export const deleteGoal = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Goal not found");
   }
-
   await goal.deleteOne();
 
   res.status(200).json({
